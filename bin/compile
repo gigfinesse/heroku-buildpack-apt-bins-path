@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+set -eo pipefail
+
+BUILD_DIR=$1
+# CACHE_DIR=$2
+
+PROFILE_PATH="${BUILD_DIR}/.profile.d/000_apt.sh"
+mkdir -p "${PROFILE_PATH%/*}"
+
+cat <<EOF >$BUILD_DIR/.profile.d/000_apt.sh
+export PATH="${BIN_PATH}${PATH}"
+EOF
+
+export BIN_PATH="$(find "${BUILD_DIR}/.apt" -maxdepth 5 -type d \( -name "bin" -o -name "sbin" \) -printf "\${BUILD_DIR}/.apt/%P:")"
+
+sed -i "1iBIN_PATH=\"${BIN_PATH}\"" "${PROFILE_PATH}"
+
+source "${PROFILE_PATH}"
+
+sed -iu 's/${BUILD_DIR}/${HOME}/g' "${PROFILE_PATH}"
