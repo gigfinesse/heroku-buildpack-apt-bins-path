@@ -9,7 +9,7 @@ BUILD_DIR=$1
 PROFILE_PATH="${BUILD_DIR}/.profile.d/apt-bins-path.sh"
 mkdir -p "${PROFILE_PATH%/*}"
 
-cat <<EOF >"$PROFILE_PATH"
+cat <<'EOF' >"$PROFILE_PATH"
 export PATH="${BIN_PATH}${PATH}"
 EOF
 
