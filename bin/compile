@@ -6,10 +6,10 @@ set -eo pipefail
 BUILD_DIR=$1
 # CACHE_DIR=$2
 
-PROFILE_PATH="${BUILD_DIR}/.profile.d/000_apt.sh"
+PROFILE_PATH="${BUILD_DIR}/.profile.d/apt-bins-path.sh"
 mkdir -p "${PROFILE_PATH%/*}"
 
-cat <<EOF >$BUILD_DIR/.profile.d/000_apt.sh
+cat <<EOF >"$PROFILE_PATH"
 export PATH="${BIN_PATH}${PATH}"
 EOF
 
